@@ -1,3 +1,4 @@
+/* File Location: styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,5 +18,30 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+.auth-container,
+.quiz-container {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+button:disabled {
+  background: gray;
+  cursor: not-allowed;
 }
