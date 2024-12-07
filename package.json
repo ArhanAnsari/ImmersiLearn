@@ -21,6 +21,7 @@
     "@radix-ui/react-toast": "^1.2.2",
     "@react-three/drei": "^9.120.2",
     "@react-three/fiber": "^8.17.10",
+    "@sentry/nextjs": "^8.42.0",
     "appwrite": "^16.0.2",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.0",
