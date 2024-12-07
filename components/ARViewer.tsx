@@ -1,13 +1,15 @@
-// File Location: app/dashboard/page.tsx
-import Auth from '@/app/components/Auth';
-import Quiz from '@/app/components/Quiz';
+import { useGLTF } from '@react-three/drei';
 
-export default function Dashboard() {
+export default function ARViewer() {
+  //DNA Model from https://www.fab.com/listings/dad3bc90-cef7-4ac6-9166-eb94483c2dca
+  //Credits to Respectively owners
+  const model = useGLTF('/assets/models/dna_gltf/scene.gltf');
+
   return (
-    <main className="p-4">
-      <h1 className="text-2xl font-bold mb-4">AR-Enhanced E-Learning Dashboard</h1>
-      <Auth />
-      <Quiz />
-    </main>
+    <Canvas>
+      <ambientLight />
+      <OrbitControls />
+      <primitive object={model.scene} />
+    </Canvas>
   );
 }
