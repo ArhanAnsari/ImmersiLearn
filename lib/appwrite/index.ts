@@ -1,4 +1,6 @@
 // File Location: lib/appwrite/index.ts
+"use server";
+
 import { Client, Account, Databases, Storage } from "appwrite";
 import { appwriteConfig } from "@/lib/appwrite/config";
 import { cookies } from "next/headers";
