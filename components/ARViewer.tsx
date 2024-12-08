@@ -1,24 +1,27 @@
-// File Location: ./components/ARViewer.tsx
+// ./components/ARViewer.tsx
+'use client';
+
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useGLTF } from '@react-three/drei';
-import { Html, useProgress } from '@react-three/drei';
+import { OrbitControls, useGLTF, Html, useProgress } from '@react-three/drei';
+import { Suspense } from 'react';
 
 function Loader() {
   const { progress } = useProgress();
-  return <Html center>{progress.toFixed(0)} % loaded</Html>;
+  return <Html center>{progress.toFixed(0)}% loaded</Html>;
 }
 
 export default function ARViewer() {
-  // DNA Model from https://www.fab.com/listings/dad3bc90-cef7-4ac6-9166-eb94483c2dca
-  // Credits to respective owners
-  const model = useGLTF('/assets/models/dna_gltf/scene.gltf');
+  const { scene } = useGLTF('/assets/models/dna_gltf/scene.gltf'); // Ensure correct path to model
 
   return (
     <Canvas>
-      <Loader />
       <ambientLight />
-      <OrbitControls />
-      <primitive object={model.scene} />
+      <Suspense fallback={<Loader />}>
+        <OrbitControls />
+        <primitive object={scene} />
+      </Suspense>
     </Canvas>
   );
 }
+
+useGLTF.preload('/assets/models/dna_gltf/scene.gltf');

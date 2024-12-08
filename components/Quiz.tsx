@@ -1,8 +1,8 @@
-// File Location: app/components/Quiz.tsx
+// app/components/Quiz.tsx
 'use client';
 
 import { useState } from 'react';
-import { Client, Account, Databases, Storage } from "appwrite";
+import { Client, Account, Databases, Storage } from 'appwrite';
 import { appwriteConfig } from '@/lib/appwrite/config';
 
 export default function Quiz() {
@@ -12,9 +12,7 @@ export default function Quiz() {
   const client = new Client()
     .setEndpoint(appwriteConfig.endpointUrl)
     .setProject(appwriteConfig.projectId);
-  const account = new Account(client);
   const databases = new Databases(client);
-  const storage = new Storage(client);
 
   const handleQuizCompletion = async () => {
     try {
