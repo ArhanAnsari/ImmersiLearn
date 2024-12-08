@@ -2,12 +2,19 @@
 'use client';
 
 import { useState } from 'react';
-import { databases } from '@/lib/appwrite';
+import { Client, Account, Databases, Storage } from "appwrite";
 import { appwriteConfig } from '@/lib/appwrite/config';
 
 export default function Quiz() {
   const [score, setScore] = useState(0);
   const [completed, setCompleted] = useState(false);
+
+  const client = new Client()
+    .setEndpoint(appwriteConfig.endpointUrl)
+    .setProject(appwriteConfig.projectId);
+  const account = new Account(client);
+  const databases = new Databases(client);
+  const storage = new Storage(client);
 
   const handleQuizCompletion = async () => {
     try {

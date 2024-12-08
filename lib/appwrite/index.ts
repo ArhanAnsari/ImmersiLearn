@@ -5,14 +5,6 @@ import { Client, Account, Databases, Storage } from "appwrite";
 import { appwriteConfig } from "@/lib/appwrite/config";
 import { cookies } from "next/headers";
 
-const client = new Client()
-    .setEndpoint(appwriteConfig.endpointUrl)
-    .setProject(appwriteConfig.projectId);
-
-const account = new Account(client);
-const databases = new Databases(client);
-const storage = new Storage(client);
-
 export const createSessionClient = async () => {
     const client = new Client()
       .setEndpoint(appwriteConfig.endpointUrl)
@@ -52,5 +44,3 @@ export const createSessionClient = async () => {
       },
     };
   };
-
-export { client, account, databases, storage };

@@ -58,7 +58,6 @@ export const createAccount = async ({
       {
         fullName,
         email,
-        avatar: avatarPlaceholderUrl,
         accountId,
       },
     );
