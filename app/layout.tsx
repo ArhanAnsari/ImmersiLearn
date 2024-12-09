@@ -1,19 +1,33 @@
-// File Location: app/layout.tsx
-import './globals.css';
+import type { Metadata } from "next";
+import { Poppins } from 'next/font/google'
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-export const metadata = {
+import "./globals.css";
+
+const poppins = Poppins({
+    subsets: ['latin'],
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+    variable: '--font-poppins',
+})
+
+export const metadata: Metadata = {
   title: "ImmersiLearn - The Future of Learning",
   description: "Experience the future of education with AR-powered immersive visuals and interactive learning tools.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <body>
+      <body
+        className={`${poppins.variable} font-poppins antialiased`}
+      >
         <Header />
-        <main>{children}</main>
+        {children}
         <Footer />
       </body>
     </html>

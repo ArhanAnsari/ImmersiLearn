@@ -20,34 +20,6 @@ export default function Footer() {
             Arhan Ansari
           </a>
         </p>
-        <div className="mt-4">
-          <ul className="flex justify-center space-x-6 text-sm">
-            <li>
-              <a
-                href="#privacy"
-                className="hover:text-white transition-colors duration-300"
-              >
-                Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a
-                href="#terms"
-                className="hover:text-white transition-colors duration-300"
-              >
-                Terms of Service
-              </a>
-            </li>
-            <li>
-              <a
-                href="#support"
-                className="hover:text-white transition-colors duration-300"
-              >
-                Support
-              </a>
-            </li>
-          </ul>
-        </div>
       </div>
     </footer>
   );

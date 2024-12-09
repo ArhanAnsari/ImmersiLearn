@@ -11,26 +11,10 @@ export default function Header() {
         <ul className="flex space-x-6 text-lg">
           <li>
             <a
-              href="#home"
+              href="/"
               className="hover:text-yellow-300 transition-colors duration-300"
             >
-              Home
-            </a>
-          </li>
-          <li>
-            <a
-              href="#about"
-              className="hover:text-yellow-300 transition-colors duration-300"
-            >
-              About
-            </a>
-          </li>
-          <li>
-            <a
-              href="#contact"
-              className="hover:text-yellow-300 transition-colors duration-300"
-            >
-              Contact
+              Dashboard
             </a>
           </li>
         </ul>

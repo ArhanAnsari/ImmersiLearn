@@ -32,6 +32,11 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* OTP Modal */
+.otp-close-button {
+  @apply absolute -right-1 -top-7 cursor-pointer sm:-right-2 sm:-top-4  !important;
+}
+
 @layer base {
   :root {
     --radius: 0.5rem;
