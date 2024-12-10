@@ -1,10 +1,15 @@
 // components/Header.tsx
-import React from "react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { signOutUser } from "@/lib/actions/user.actions";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { signOutUser } from '@/lib/actions/user.actions';
 
-export default function Header() {
+interface HeaderProps {
+  userId: string;
+  accountId: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ userId, accountId }) => {
   return (
     <nav className="p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg">
       <div className="container mx-auto flex items-center justify-between">
@@ -24,25 +29,26 @@ export default function Header() {
           </li>
         </ul>
         <div className="header-wrapper">
-        <form
-          action={async () => {
-            "use server";
-
-            await signOutUser();
-          }}
-        >
-          <Button type="submit" className="sign-out-button">
-            <Image
-              src="/assets/icons/logout.svg"
-              alt="logo"
-              width={24}
-              height={24}
-              className="w-6"
-            />
-          </Button>
-        </form>
-      </div>
+          <form
+            action={async () => {
+              'use server';
+              await signOutUser();
+            }}
+          >
+            <Button type="submit" className="sign-out-button">
+              <Image
+                src="/assets/icons/logout.svg"
+                alt="logo"
+                width={24}
+                height={24}
+                className="w-6"
+              />
+            </Button>
+          </form>
+        </div>
       </div>
     </nav>
   );
-}
+};
+
+export default Header;
