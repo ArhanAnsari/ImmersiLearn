@@ -1,54 +1,26 @@
-// Header.tsx
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import { signOutUser } from '@/lib/actions/user.actions';
+import React from "react";
+import Header from '@/components/Header';
+import { getCurrentUser } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
+import { Toaster } from "@/components/ui/toaster";
 
-interface HeaderProps {
-  userId: string;
-  accountId: string;
-}
+export const dynamic = "force-dynamic";
 
-const Header: React.FC<HeaderProps> = ({ userId, accountId }) => {
+const Layout = async ({ children }: { children: React.ReactNode }) => {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) return redirect("/sign-in");
+
   return (
-    <nav className="p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg">
-      <div className="container mx-auto flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-wide">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-pink-500">
-            ImmersiLearn
-          </span>
-        </h1>
-        <ul className="flex space-x-6 text-lg">
-          <li>
-            <a
-              href="/"
-              className="hover:text-yellow-300 transition-colors duration-300"
-            >
-              Dashboard
-            </a>
-          </li>
-        </ul>
-        <div className="header-wrapper">
-          <form
-            action={async () => {
-              'use server';
-              await signOutUser();
-            }}
-          >
-            <Button type="submit" className="sign-out-button">
-              <Image
-                src="/assets/icons/logout.svg"
-                alt="logo"
-                width={24}
-                height={24}
-                className="w-6"
-              />
-            </Button>
-          </form>
-        </div>
-      </div>
-    </nav>
+    <main className="flex h-screen">
+
+      <section className="flex h-full flex-1 flex-col">
+        <Header userId={currentUser.$id} accountId={currentUser.accountId} />
+        <div className="main-content">{children}</div>
+      </section>
+
+      <Toaster />
+    </main>
   );
 };
-
-export default Header;
+export default Layout;
