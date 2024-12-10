@@ -1,4 +1,9 @@
 // components/Header.tsx
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { signOutUser } from "@/lib/actions/user.actions";
+
 export default function Header() {
   return (
     <nav className="p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg">
@@ -18,6 +23,25 @@ export default function Header() {
             </a>
           </li>
         </ul>
+        <div className="header-wrapper">
+        <form
+          action={async () => {
+            "use server";
+
+            await signOutUser();
+          }}
+        >
+          <Button type="submit" className="sign-out-button">
+            <Image
+              src="/assets/icons/logout.svg"
+              alt="logo"
+              width={24}
+              height={24}
+              className="w-6"
+            />
+          </Button>
+        </form>
+      </div>
       </div>
     </nav>
   );
