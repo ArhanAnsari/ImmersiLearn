@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Client, Account, Databases } from 'appwrite';
+import { Client, Databases } from 'appwrite';
 import { appwriteConfig } from '@/lib/appwrite/config';
 
 export default function Quiz() {
