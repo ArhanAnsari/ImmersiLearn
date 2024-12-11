@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Client, Account, Databases, Storage } from 'appwrite';
+import { Client, Account, Databases } from 'appwrite';
 import { appwriteConfig } from '@/lib/appwrite/config';
 
 export default function Quiz() {
@@ -18,7 +18,7 @@ export default function Quiz() {
     try {
       await databases.createDocument(
         appwriteConfig.databaseId, // Replace with your Database ID
-        appwriteConfig.usersCollectionId, // Replace with your Collection ID
+        appwriteConfig.usersScoreCollectionId, // Replace with your Collection ID
         'unique()',
         { userId: 'USER_ID', score }
       );
