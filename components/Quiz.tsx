@@ -1,8 +1,7 @@
-// app/components/Quiz.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Client, Databases } from 'appwrite';
+import { Client, Databases, Account } from 'appwrite';
 import { appwriteConfig } from '@/lib/appwrite/config';
 
 interface Question {
@@ -31,6 +30,12 @@ const QUESTIONS: Question[] = [
     options: ['1223', '456', '145', '6'],
     correctAnswer: '145',
   },
+  {
+    id: '4',
+    question: 'What is the largest planet in our solar system?',
+    options: ['Earth', 'Saturn', 'Jupiter', 'Mars'],
+    correctAnswer: 'Jupiter',
+  }
 ];
 
 export default function Quiz() {
@@ -39,14 +44,29 @@ export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [remainingQuestions, setRemainingQuestions] = useState<Question[]>(QUESTIONS);
   const [userAnswer, setUserAnswer] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const client = new Client()
     .setEndpoint(appwriteConfig.endpointUrl)
     .setProject(appwriteConfig.projectId);
+
   const databases = new Databases(client);
+  const account = new Account(client);
 
   useEffect(() => {
-    pickRandomQuestion();
+    // Check if the user is authenticated
+    const fetchUser = async () => {
+      try {
+        const session = await account.get();
+        setUserId(session.$id);
+        pickRandomQuestion();
+      } catch (error) {
+        console.error('User not authenticated:', error);
+        alert('You must log in to participate in the quiz.');
+      }
+    };
+
+    fetchUser();
   }, []);
 
   const pickRandomQuestion = () => {
@@ -71,16 +91,21 @@ export default function Quiz() {
   };
 
   const handleQuizCompletion = async () => {
+    if (!userId) {
+      alert('Error: Unable to save score. User not authenticated.');
+      return;
+    }
+
     try {
       await databases.createDocument(
-        appwriteConfig.databaseId, // Replace with your Database ID
-        appwriteConfig.usersScoreCollectionId, // Replace with your Collection ID
+        appwriteConfig.databaseId,
+        appwriteConfig.usersScoreCollectionId,
         'unique()',
-        { userId: 'USER_ID', score }
+        { userId, score }
       );
       alert('Score Saved!');
     } catch (error) {
-      console.error(error);
+      console.error('Error saving score:', error);
       alert('Error saving score.');
     }
   };
