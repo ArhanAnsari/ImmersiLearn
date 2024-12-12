@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Client, Databases, Account } from 'appwrite';
-import { appwriteConfig } from '@/lib/appwrite/config';
+import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 interface Question {
   id: string;
@@ -35,7 +34,31 @@ const QUESTIONS: Question[] = [
     question: 'What is the largest planet in our solar system?',
     options: ['Earth', 'Saturn', 'Jupiter', 'Mars'],
     correctAnswer: 'Jupiter',
-  }
+  },
+  {
+    id: '5',
+    question: 'What is the boiling point of water?',
+    options: ['100°C', '0°C', '50°C', '75°C'],
+    correctAnswer: '100°C',
+  },
+  {
+    id: '6',
+    question: 'Which language is known as the language of the web?',
+    options: ['Python', 'Java', 'HTML', 'C++'],
+    correctAnswer: 'HTML',
+  },
+  {
+    id: '7',
+    question: 'Who developed the theory of relativity?',
+    options: ['Isaac Newton', 'Albert Einstein', 'Nikola Tesla', 'Galileo Galilei'],
+    correctAnswer: 'Albert Einstein',
+  },
+  {
+    id: '8',
+    question: 'What is the square root of 64?',
+    options: ['6', '7', '8', '9'],
+    correctAnswer: '8',
+  },
 ];
 
 export default function Quiz() {
@@ -44,29 +67,9 @@ export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [remainingQuestions, setRemainingQuestions] = useState<Question[]>(QUESTIONS);
   const [userAnswer, setUserAnswer] = useState<string | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
-
-  const client = new Client()
-    .setEndpoint(appwriteConfig.endpointUrl)
-    .setProject(appwriteConfig.projectId);
-
-  const databases = new Databases(client);
-  const account = new Account(client);
 
   useEffect(() => {
-    // Check if the user is authenticated
-    const fetchUser = async () => {
-      try {
-        const session = await account.get();
-        setUserId(session.$id);
-        pickRandomQuestion();
-      } catch (error) {
-        console.error('User not authenticated:', error);
-        alert('You must log in to participate in the quiz.');
-      }
-    };
-
-    fetchUser();
+    pickRandomQuestion();
   }, []);
 
   const pickRandomQuestion = () => {
@@ -90,25 +93,17 @@ export default function Quiz() {
     }
   };
 
-  const handleQuizCompletion = async () => {
-    if (!userId) {
-      alert('Error: Unable to save score. User not authenticated.');
-      return;
-    }
+  const handleQuizCompletion = () => {
+  setScore(0);
+  setCompleted(false);
+  setRemainingQuestions(QUESTIONS);
+  setCurrentQuestion(null);
+  setUserAnswer(null);
+  
+  // Reset and pick a random question
+  setTimeout(() => pickRandomQuestion(), 0);
+};
 
-    try {
-      await databases.createDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.usersScoreCollectionId,
-        'unique()',
-        { userId, score }
-      );
-      alert('Score Saved!');
-    } catch (error) {
-      console.error('Error saving score:', error);
-      alert('Error saving score.');
-    }
-  };
 
   return (
     <div className="quiz-container">
@@ -121,15 +116,26 @@ export default function Quiz() {
               key={option}
               onClick={() => handleAnswer(option)}
               disabled={!!userAnswer}
-              className={`block p-2 w-full text-left mb-2 rounded ${
-                userAnswer === option
-                  ? option === currentQuestion.correctAnswer
-                    ? 'bg-green-500 text-white'
-                    : 'bg-red-500 text-white'
-                  : 'bg-gray-200'
-              }`}
+              className={`flex items-center justify-between block p-2 w-full text-left mb-2 rounded border ${
+    userAnswer
+      ? option === currentQuestion.correctAnswer
+        ? 'bg-green-500 text-white border-green-700'
+        : userAnswer === option
+        ? 'bg-red-500 text-white border-red-700'
+        : 'bg-gray-200 border-gray-400'
+      : 'bg-gray-200 border-gray-400'
+  }`}
             >
               {option}
+              {userAnswer && (
+                <span>
+                  {option === currentQuestion.correctAnswer ? (
+                    <FaCheckCircle className="ml-2" />
+                  ) : userAnswer === option ? (
+                    <FaTimesCircle className="ml-2" />
+                  ) : null}
+                </span>
+              )}
             </button>
           ))}
           {userAnswer && (
@@ -149,7 +155,7 @@ export default function Quiz() {
             onClick={handleQuizCompletion}
             className="p-2 bg-green-500 text-white w-full"
           >
-            Save Score
+            Restart Quiz
           </button>
         </div>
       ) : (

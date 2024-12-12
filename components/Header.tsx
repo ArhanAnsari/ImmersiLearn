@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ userId, accountId }) => {
   return (
     <nav className="p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg">
       <div className="container mx-auto flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-wide">
+        {/* <h1 className="text-2xl font-bold tracking-wide">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-pink-500">
             ImmersiLearn
           </span>
@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ userId, accountId }) => {
               Dashboard
             </a>
           </li>
-        </ul>
+        </ul> */}
         <div className="header-wrapper">
           <form
             action={async () => {

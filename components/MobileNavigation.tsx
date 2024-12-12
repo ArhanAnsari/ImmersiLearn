@@ -32,13 +32,11 @@ const MobileNavigation = ({
 
   return (
     <header className="mobile-header">
-      <Image
-        src="/assets/icons/logo-full-brand.svg"
-        alt="logo"
-        width={120}
-        height={52}
-        className="h-auto"
-      />
+      <h1 className="text-2xl font-bold tracking-wide">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-pink-500">
+            ImmersiLearn
+          </span>
+        </h1>
 
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger>
