@@ -1,3 +1,4 @@
+//components/Quiz.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -94,36 +95,35 @@ export default function Quiz() {
   };
 
   const handleQuizCompletion = () => {
-  setScore(0);
-  setCompleted(false);
-  setRemainingQuestions(QUESTIONS);
-  setCurrentQuestion(null);
-  setUserAnswer(null);
-  
-  // Reset and pick a random question
-  setTimeout(() => pickRandomQuestion(), 0);
-};
+    setScore(0);
+    setCompleted(false);
+    setRemainingQuestions(QUESTIONS);
+    setCurrentQuestion(null);
+    setUserAnswer(null);
 
+    // Reset and pick a random question
+    setTimeout(() => pickRandomQuestion(), 0);
+  };
 
   return (
-    <div className="quiz-container">
-      <h2>Your Quiz</h2>
+    <div className="quiz-container p-4 max-w-lg mx-auto">
+      <h2 className="text-2xl font-bold text-center mb-6">Your Quiz</h2>
       {currentQuestion && !completed ? (
         <div>
-          <p className="mb-4">{currentQuestion.question}</p>
+          <p className="mb-4 text-lg font-medium">{currentQuestion.question}</p>
           {currentQuestion.options.map((option) => (
             <button
               key={option}
               onClick={() => handleAnswer(option)}
               disabled={!!userAnswer}
-              className={`flex items-center justify-between block p-2 w-full text-left mb-2 rounded border ${
+              className={`flex items-center justify-between block p-2 w-full text-left mb-2 rounded border transition-colors duration-200 ${
     userAnswer
       ? option === currentQuestion.correctAnswer
         ? 'bg-green-500 text-white border-green-700'
         : userAnswer === option
         ? 'bg-red-500 text-white border-red-700'
         : 'bg-gray-200 border-gray-400'
-      : 'bg-gray-200 border-gray-400'
+      : 'bg-gray-200 hover:bg-gray-300 border-gray-400'
   }`}
             >
               {option}
@@ -141,7 +141,7 @@ export default function Quiz() {
           {userAnswer && (
             <button
               onClick={pickRandomQuestion}
-              className="p-2 bg-blue-500 text-white w-full mt-4"
+              className="p-2 bg-blue-500 text-white w-full mt-4 rounded hover:bg-blue-600 transition-colors duration-200"
             >
               Next Question
             </button>
@@ -149,11 +149,11 @@ export default function Quiz() {
         </div>
       ) : completed ? (
         <div>
-          <p className="mb-4">You have completed the quiz!</p>
-          <p className="mb-4">Your Score: {score}</p>
+          <p className="mb-4 text-lg">You have completed the quiz!</p>
+          <p className="mb-4 text-lg font-medium">Your Score: {score}</p>
           <button
             onClick={handleQuizCompletion}
-            className="p-2 bg-green-500 text-white w-full"
+            className="p-2 bg-green-500 text-white w-full rounded hover:bg-green-600 transition-colors duration-200"
           >
             Restart Quiz
           </button>
