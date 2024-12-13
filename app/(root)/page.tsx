@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import Quiz from '@/components/Quiz';
 
 export default function HomePage() {

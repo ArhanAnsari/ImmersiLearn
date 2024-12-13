@@ -60,6 +60,25 @@ const QUESTIONS: Question[] = [
     options: ['6', '7', '8', '9'],
     correctAnswer: '8',
   },
+  //Add more questions
+  {
+    id: '9',
+    question: 'What is the chemical symbol for gold?',
+    options: ['Ag', 'Au', 'Hg', 'Pb'],
+    correctAnswer: 'Au',
+  },
+  {
+    id: '10',
+    question: 'Who wrote the book "To Kill a Mockingbird"?',
+    options: ['F. Scott Fitzgerald', 'Harper Lee', 'Jane Austen', 'William Shakespeare'],
+    correctAnswer: 'Harper Lee',
+  },
+  {
+    id: '11',
+    question: 'A knish is traditionally stuffed with what filling?',
+    options: ['Potato', 'Creamed Corn', 'Lemon Custard', 'Raspberry Jelly'],
+    correctAnswer: 'Potato',
+  },
 ];
 
 export default function Quiz() {
@@ -107,7 +126,7 @@ export default function Quiz() {
 
   return (
     <div className="quiz-container p-4 max-w-lg mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-6">Your Quiz</h2>
+      <h2 className="text-2xl font-bold text-center mb-6">Quiz Game</h2>
       {currentQuestion && !completed ? (
         <div>
           <p className="mb-4 text-lg font-medium">{currentQuestion.question}</p>
@@ -116,23 +135,23 @@ export default function Quiz() {
               key={option}
               onClick={() => handleAnswer(option)}
               disabled={!!userAnswer}
-              className={`flex items-center justify-between block p-2 w-full text-left mb-2 rounded border transition-colors duration-200 ${
-    userAnswer
-      ? option === currentQuestion.correctAnswer
-        ? 'bg-green-500 text-white border-green-700'
-        : userAnswer === option
-        ? 'bg-red-500 text-white border-red-700'
-        : 'bg-gray-200 border-gray-400'
-      : 'bg-gray-200 hover:bg-gray-300 border-gray-400'
-  }`}
+              className={`flex items-center justify-between block p-3 w-full text-left mb-2 rounded-lg border transition-colors duration-200 font-medium ${
+                userAnswer
+                  ? option === currentQuestion.correctAnswer
+                    ? 'bg-green-100 text-green-800 border-green-400'
+                    : userAnswer === option
+                    ? 'bg-red-100 text-red-800 border-red-400'
+                    : 'bg-gray-100 text-gray-800 border-gray-300'
+                  : 'bg-white hover:bg-blue-100 text-gray-800 border-gray-300'
+              }`}
             >
               {option}
               {userAnswer && (
                 <span>
                   {option === currentQuestion.correctAnswer ? (
-                    <FaCheckCircle className="ml-2" />
+                    <FaCheckCircle className="ml-2 text-green-500" />
                   ) : userAnswer === option ? (
-                    <FaTimesCircle className="ml-2" />
+                    <FaTimesCircle className="ml-2 text-red-500" />
                   ) : null}
                 </span>
               )}
@@ -141,7 +160,7 @@ export default function Quiz() {
           {userAnswer && (
             <button
               onClick={pickRandomQuestion}
-              className="p-2 bg-blue-500 text-white w-full mt-4 rounded hover:bg-blue-600 transition-colors duration-200"
+              className="p-3 bg-blue-500 text-white w-full mt-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 font-semibold"
             >
               Next Question
             </button>
@@ -153,7 +172,7 @@ export default function Quiz() {
           <p className="mb-4 text-lg font-medium">Your Score: {score}</p>
           <button
             onClick={handleQuizCompletion}
-            className="p-2 bg-green-500 text-white w-full rounded hover:bg-green-600 transition-colors duration-200"
+            className="p-3 bg-green-500 text-white w-full rounded-lg hover:bg-green-600 transition-colors duration-200 font-semibold"
           >
             Restart Quiz
           </button>

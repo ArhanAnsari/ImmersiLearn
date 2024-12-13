@@ -28,15 +28,28 @@ const MobileNavigation = ({
   email,
 }: Props) => {
   const [open, setOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const pathname = usePathname();
 
   return (
     <header className="mobile-header">
-      <h1 className="text-2xl font-bold tracking-wide">
+       <div className={darkMode ? 'dark' : ''}>
+       <div className="app-container min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+        <header className="p-4 flex justify-between items-center bg-white dark:bg-gray-800 shadow-md">
+        <h1 className="text-2xl font-bold tracking-wide">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-pink-500">
             ImmersiLearn
           </span>
-        </h1>
+          </h1>
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-2 bg-gray-200 dark:bg-gray-700 rounded-md"
+          >
+            Toggle {darkMode ? 'Light' : 'Dark'} Mode
+          </button>
+        </header>
+         </div>
+        </div>
 
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger>
