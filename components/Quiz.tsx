@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import ProgressBar from '@/components/ProgressBar';
 
 interface Question {
   id: string;
@@ -87,6 +88,9 @@ export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [remainingQuestions, setRemainingQuestions] = useState<Question[]>(QUESTIONS);
   const [userAnswer, setUserAnswer] = useState<string | null>(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  const totalQuestions = QUESTIONS.length;
 
   useEffect(() => {
     pickRandomQuestion();
@@ -99,6 +103,7 @@ export default function Quiz() {
       setRemainingQuestions((prev) =>
         prev.filter((_, index) => index !== randomIndex)
       );
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1); // Increment index
       setUserAnswer(null);
     } else {
       setCompleted(true);
@@ -117,9 +122,10 @@ export default function Quiz() {
     setScore(0);
     setCompleted(false);
     setRemainingQuestions(QUESTIONS);
+    setCurrentQuestionIndex(0); // Reset index
     setCurrentQuestion(null);
     setUserAnswer(null);
-
+  
     // Reset and pick a random question
     setTimeout(() => pickRandomQuestion(), 0);
   };
@@ -127,6 +133,7 @@ export default function Quiz() {
   return (
     <div className="quiz-container p-4 max-w-lg mx-auto">
       <h2 className="text-2xl font-bold text-center mb-6">Quiz Game</h2>
+      <ProgressBar current={currentQuestionIndex} total={totalQuestions} />
       {currentQuestion && !completed ? (
         <div>
           <p className="mb-4 text-lg font-medium">{currentQuestion.question}</p>
